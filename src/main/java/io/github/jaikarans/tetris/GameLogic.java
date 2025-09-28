@@ -1,88 +1,101 @@
 package io.github.jaikarans.tetris;
 
 public class GameLogic {
+    private static GameState s = GameState.getInstance();
 
-    private static GameLogic instance;
-
-    private static GameState state = GameState.getInstance();
-    int row = state.row;
-    int col = state.col;
-    int color = state.color;
-    int height = state.height;
-    int[][] arr = state.arr;
-
-    private GameLogic() {
-    }
-
-    public static GameLogic getInstance() {
-        if (instance == null) {
-            instance = new GameLogic();
+    public static void lockPiece() {
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.x >= 0)
+                s.arr[cell.x][cell.y] = s.color;
+            else
+            App.shapeOutOfBox = true;
         }
-        return instance;
+        s.shapeCells.clear();
     }
 
-    public void generateNewShape() {
-        state.col = state.width / 2;
-        col = state.col;
-        color = (int) (Math.random() * (200 - 5 + 1)) + 5;
-        state.color = color;
-        arr[row][col] = 1;
-        arr[row][col + 1] = 1;
-        arr[row - 1][col] = 1;
-        arr[row - 1][col + 1] = 1;
+    public static void clearFullRows() {
+        boolean rowFilled;
+        for (int i = s.height; i >= 0; --i) {
+            rowFilled = true;
+            for (int j = 0; j <= s.width; ++j) {
+                if (s.arr[i][j] == 0) {
+                    rowFilled = false;
+                    break;
+                }
+            }
+            if (rowFilled) {
+                int r = i;
+                for (int row = i - 1; row >= 0; --row) {
+                    for (int j = 0; j <= s.width; ++j) {
+                        s.arr[r][j] = s.arr[row][j];
+                    }
+                    --r;
+                }
+                ++i;
+            }
+        }
     }
 
-    public void fallDown() {
-        arr[row][col] = 0;
-        arr[row][col + 1] = 0;
-        arr[row - 1][col] = 0;
-        arr[row - 1][col + 1] = 0;
-
-        arr[row + 1][col] = 1;
-        arr[row + 1][col + 1] = 1;
-        arr[row][col] = 1;
-        arr[row][col + 1] = 1;
-        state.row++;
-        row++;
-
-        
-        // if collision happens or shape goes on bottom for now only for o shape
-        if (row >= height || arr[row+1][col] > 0 || arr[row + 1][col + 1] > 0) {
-            state.row = 1;
-            row = 1;
-            generateNewShape();
+    public static void movePieceDown() {
+        System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+CollisionDetector.pieceCanMoveDown());
+        System.out.println(s.shapeCells.isEmpty());
+        for (CurrentShapeCell cell : s.shapeCells) {
+            System.out.println("cell"+cell.x+" "+cell.y);
         }
 
+        // clear old positions
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.x >= 0)
+                s.arr[cell.x][cell.y] = 0;
+        }
+    
+        // move all shape cells down
+        for (CurrentShapeCell cell : s.shapeCells) {
+            cell.x += 1;
+        }
+
+        // draw new positions
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.x >= 0)
+                s.arr[cell.x][cell.y] = 1;
+        }
+
     }
 
-    public void moveLeft() {
-        if (col <= 0) return;
-        arr[row][col] = 0;
-        arr[row][col + 1] = 0;
-        arr[row - 1][col] = 0;
-        arr[row - 1][col + 1] = 0;
+    public static void moveLeft() {
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.y <= 0 || CollisionDetector.isSideCollision(-1)){
+                return;
+            }
+        }
 
-        arr[row][col - 1] = 1;
-        arr[row][col - 1] = 1;
-        arr[row - 1][col - 1] = 1;
-        arr[row - 1][col - 1] = 1;
-        state.col--;
-        col--;
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.x >= 0)
+                s.arr[cell.x][cell.y] = 0;
+        }
+
+        for (CurrentShapeCell cell: s.shapeCells) {
+            cell.y -= 1;
+        }
+
     }
 
-    public void moveRight() {
-        if (col >= state.width - 1) return;
-        arr[row][col] = 0;
-        arr[row][col + 1] = 0;
-        arr[row - 1][col] = 0;
-        arr[row - 1][col + 1] = 0;
+    public static void moveRight() {
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.y >= s.width || CollisionDetector.isSideCollision(1)){
+                return;
+            }
+        }
 
-        arr[row][col + 1] = 1;
-        arr[row][col + 1] = 1;
-        arr[row - 1][col + 1] = 1;
-        arr[row - 1][col + 1] = 1;
-        state.col++;
-        col++;
+        for (CurrentShapeCell cell : s.shapeCells) {
+            if (cell.x >= 0)
+                s.arr[cell.x][cell.y] = 0;
+        }
+
+        for (CurrentShapeCell cell: s.shapeCells) {
+            cell.y += 1;
+        }
+
     }
 
 }

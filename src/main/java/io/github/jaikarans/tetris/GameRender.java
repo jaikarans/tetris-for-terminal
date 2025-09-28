@@ -1,24 +1,13 @@
 package io.github.jaikarans.tetris;
 
 public class GameRender {
-  private static GameRender instance;
-
-  GameState game = GameState.getInstance();
-
-  private GameRender() {}
-
-  public static GameRender getInstance() {
-    if (instance == null) {
-      instance = new GameRender();
-    }
-    return instance;
-  }
+    static GameState game = GameState.getInstance();
 
 
   /**
    * render the game in terminal
    */
-  public void renderGame() {
+  public static void renderGame() {
     long start = System.nanoTime();
 
     // Move cursor to top-left before drawing
@@ -31,7 +20,13 @@ public class GameRender {
     System.out.println();
     System.out.println();
 
-    for (int i = 1; i <= game.height; i++) {
+      System.out.print(game.margin);
+      for (int i = 0; i <= 2*game.width + 3; i++) {
+          System.out.print("\033[38;5;34;48;5;236m \033[0m");
+      }
+      System.out.println();
+
+      for (int i = 0; i <= game.height; i++) {
         System.out.print(game.margin);
 
         // border
@@ -41,7 +36,7 @@ public class GameRender {
             // empty cells
             if (game.arr[i][j] == 0) {
                 // System.out.print("\033[38;5;0m██\033[0m");
-                System.out.print("\033[38;5;0m█\033[0m.");
+                System.out.print("\033[38;5;0m█\033[38;5;240m.\033[0m");
                 continue;
             }
 
