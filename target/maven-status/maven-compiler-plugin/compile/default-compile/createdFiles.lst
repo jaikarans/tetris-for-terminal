@@ -1,4 +1,9 @@
 io/github/jaikarans/tetris/App.class
+io/github/jaikarans/tetris/Shape.class
+io/github/jaikarans/tetris/CurrentShapeCell.class
+io/github/jaikarans/tetris/Shape$1.class
 io/github/jaikarans/tetris/GameRender.class
 io/github/jaikarans/tetris/GameState.class
+io/github/jaikarans/tetris/CollisionDetector.class
 io/github/jaikarans/tetris/GameLogic.class
+io/github/jaikarans/tetris/ShapeType.class

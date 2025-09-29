@@ -1,5 +1,7 @@
 package io.github.jaikarans.tetris;
 
+import java.util.Arrays;
+
 public class GameRender {
     static GameState game = GameState.getInstance();
 
@@ -13,45 +15,57 @@ public class GameRender {
     // Move cursor to top-left before drawing
     System.out.print("\033[H\033[2J");
     System.out.flush();
+    for (int i = 0; i < game.height; i++) {
+        System.out.println(Arrays.toString(game.arr[i]));
+    }
 
+    System.out.println("**************************************************");
     System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
-    System.out.println();
+//    System.out.println();
+//    System.out.println();
+//    System.out.println();
 
-      System.out.print(game.margin);
-      for (int i = 0; i <= 2*game.width + 3; i++) {
-          System.out.print("\033[38;5;34;48;5;236m \033[0m");
-      }
-      System.out.println();
-
-      for (int i = 0; i <= game.height; i++) {
+      // right border printing
+      for (int i = 0; i < game.height; i++) {
         System.out.print(game.margin);
+        if (i > 2) {
+//            System.out.print("\033[38;5;236;48;5;236m█\033[0m");
+            System.out.print("┃");
+        } else {
+            System.out.print(" ");
+        }
 
-        // border
-        System.out.print("\033[38;5;34;48;5;236m \033[0m");
-
-        for (int j = 0; j <= game.width; j++) {
+        for (int j = 0; j < game.width; j++) {
             // empty cells
             if (game.arr[i][j] == 0) {
                 // System.out.print("\033[38;5;0m██\033[0m");
-                System.out.print("\033[38;5;0m█\033[38;5;240m.\033[0m");
+                System.out.print(" .");
                 continue;
             }
 
-            // cells with shape
-            System.out.print("\033[38;5;"+(game.arr[i][j] == 1 ? game.color : game.arr[i][j])+"m██\033[0m");
+            String color;
+            if (game.arr[i][j] == 1) {
+                color = game.color.get(Shape.currentShape);
+                System.out.print("\033["+color+"m██\033[0m");
+            } else {
+                color = game.color.get(ShapeType.fromId(game.arr[i][j]));
+                System.out.print("\033["+color+"m██\033[0m");
+
+            }
 
         }
-        // border
-        System.out.println("\033[38;5;34;48;5;236m \033[0m");
+
+        if (i > 2) {
+            // right border
+            System.out.print("┃");
+        }
+          System.out.println();
     }
 
     // bottom border
     System.out.print(game.margin);
-    for (int i = 0; i <= 2*game.width + 3; i++) {
-        System.out.print("\033[38;5;34;48;5;236m \033[0m");
+    for (int i = 0; i <= 2*game.width + 1; i++) {
+        System.out.print(i == 0 ? "┗" : i == 2 * game.width + 1  ? "┛" : "━");
     }
     System.out.println();
 

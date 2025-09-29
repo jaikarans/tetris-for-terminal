@@ -9,7 +9,7 @@
 
   <name>TetrisTerminal</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/jaikarans/tetris-for-terminal</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -90,6 +90,14 @@
         <plugin>
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.6.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>exec-maven-plugin</artifactId>
+          <version>3.5.0</version>
+          <configuration>
+            <mainClass>io.github.jaikarans.tetris.App</mainClass>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

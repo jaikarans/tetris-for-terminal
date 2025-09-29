@@ -13,7 +13,7 @@ public class App {
     public static boolean gameOver = false;
 
     public static void main(String[] args) throws InterruptedException {
-        int FRAME_DURATION = 150;
+        int FRAME_DURATION = 200;
         try {
             // Create a terminal
             Terminal terminal = TerminalBuilder.builder().system(true).build();

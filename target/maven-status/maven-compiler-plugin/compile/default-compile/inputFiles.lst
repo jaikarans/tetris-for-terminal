@@ -1,4 +1,8 @@
 /home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/App.java
+/home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/CollisionDetector.java
+/home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/CurrentShapeCell.java
 /home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/GameLogic.java
 /home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/GameRender.java
 /home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/GameState.java
+/home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/Shape.java
+/home/jaikaran/TetrisTerminal/src/main/java/io/github/jaikarans/tetris/ShapeType.java

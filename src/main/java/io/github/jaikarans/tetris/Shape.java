@@ -1,62 +1,79 @@
 package io.github.jaikarans.tetris;
 
+import java.util.Random;
+
 public class Shape {
-    private static GameState s = GameState.getInstance();
-    public static final int I = 0;
-    public static final int O = 1;
-    public static final int T = 2;
-    public static final int L = 3;
-    public static final int J = 4;
-    public static final int S = 5;
-    public static final int Z = 6;
+    private static final GameState s = GameState.getInstance();
+
+    public static ShapeType currentShape;
+
+    public static ShapeType getRandomShape() {
+        ShapeType[] values = ShapeType.values();
+        Random rand = new Random();
+        // Start from index 1 to skip 'empty'
+        return values[rand.nextInt(values.length - 1)];
+    }
 
     public static void generateNewShape() {
-        int shape = (int) (Math.random() * 7);
-        s.col = s.width / 2;
-        s.color = (int) (Math.random() * (200 - 5 + 1)) + 5;
+        currentShape = getRandomShape();
+//        currentShape = ShapeType.O;
 
-        switch (shape) {
+        switch (currentShape) {
             case O -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col + 1));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col + 1));
+                s.col = 5;
+                s.row = 1;
+                s.shapeCells[0] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row, s.col + 1);
+                s.shapeCells[2] = new CurrentShapeCell(s.row - 1, s.col);
+                s.shapeCells[3] = new CurrentShapeCell(s.row - 1, s.col + 1);
             }
             case I -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 2, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 3, s.col));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row, s.col - 1);
+                s.shapeCells[1] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[2] = new CurrentShapeCell(s.row, s.col + 1);
+                s.shapeCells[3] = new CurrentShapeCell(s.row, s.col + 2);
             }
             case T -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col + 1));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col + 2));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col + 1));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row, s.col + 1);
+                s.shapeCells[2] = new CurrentShapeCell(s.row, s.col + 2);
+                s.shapeCells[3] = new CurrentShapeCell(s.row - 1, s.col + 1);
             }
             case L -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 2, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col + 1));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row - 1, s.col);
+                s.shapeCells[2] = new CurrentShapeCell(s.row - 2, s.col);
+                s.shapeCells[3] = new CurrentShapeCell(s.row, s.col + 1);
             }
             case J -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 2, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col - 1));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row - 1, s.col);
+                s.shapeCells[2] = new CurrentShapeCell(s.row - 2, s.col);
+                s.shapeCells[3] = new CurrentShapeCell(s.row, s.col - 1);
             }
             case S -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col + 1));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col - 1));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row - 1, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row - 1, s.col + 1);
+                s.shapeCells[2] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[3] = new CurrentShapeCell(s.row, s.col - 1);
             }
             case Z -> {
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row - 1, s.col - 1));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col));
-                s.shapeCells.add(new CurrentShapeCell(s.row, s.col + 1));
+                s.col = 4;
+                s.row = 2;
+                s.shapeCells[0] = new CurrentShapeCell(s.row - 1, s.col);
+                s.shapeCells[1] = new CurrentShapeCell(s.row - 1, s.col - 1);
+                s.shapeCells[2] = new CurrentShapeCell(s.row, s.col);
+                s.shapeCells[3] = new CurrentShapeCell(s.row, s.col + 1);
             }
         }
     }

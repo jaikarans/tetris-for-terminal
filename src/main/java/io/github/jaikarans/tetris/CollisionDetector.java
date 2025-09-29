@@ -8,11 +8,9 @@ public class CollisionDetector {
 
     public static boolean pieceCanMoveDown() {
         // if there is no shape we need to generate a new
-        // that's why returning true
-        if (s.shapeCells.isEmpty()) return false;
-
+        // that's why returning false
         for (CurrentShapeCell cell: s.shapeCells) {
-            if (cell.x >= s.height || (cell.x >= 0 && s.arr[cell.x + 1][cell.y] > 1)) {
+            if (cell.x == s.height - 1 || (s.arr[cell.x + 1][cell.y] > 1)) {
                 return false;
             }
         }
@@ -26,7 +24,7 @@ public class CollisionDetector {
     public static boolean isSideCollision(int dir) {
         for (CurrentShapeCell cell: s.shapeCells) {
             if (dir == LEFT_DIRECTION && cell.y <= 0) return true;
-            if (dir == RIGHT_DIRECTION && cell.y >= s.width) return true;
+            if (dir == RIGHT_DIRECTION && cell.y + 1 > s.width - 1) return true;
 
             if (cell.x >= 0 && s.arr[cell.x][cell.y + dir] > 1) return true;
         }
