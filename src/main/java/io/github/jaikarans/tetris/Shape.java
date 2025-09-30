@@ -1,23 +1,36 @@
 package io.github.jaikarans.tetris;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Shape {
     private static final GameState s = GameState.getInstance();
 
     public static ShapeType currentShape;
+    public static ArrayList<ShapeType> shuffleBag = new ArrayList<>();
 
     public static ShapeType getRandomShape() {
-        ShapeType[] values = ShapeType.values();
+        if (shuffleBag.isEmpty()) {
+            for (ShapeType shape: ShapeType.values()) {
+                shuffleBag.add(shape);
+            }
+        }
+        if (shuffleBag.size() == 1) {
+            ShapeType selectedShape = shuffleBag.get(0);
+            shuffleBag.clear();
+            return selectedShape;
+        }
+        
         Random rand = new Random();
-        // Start from index 1 to skip 'empty'
-        return values[rand.nextInt(values.length - 1)];
+        int selectedIndex = rand.nextInt(shuffleBag.size() - 1);
+        ShapeType selectedShape = shuffleBag.get(selectedIndex);
+        shuffleBag.remove(selectedIndex);
+        return selectedShape;
     }
 
     public static void generateNewShape() {
         currentShape = getRandomShape();
 //        currentShape = ShapeType.O;
-
         switch (currentShape) {
             case O -> {
                 s.col = 5;
