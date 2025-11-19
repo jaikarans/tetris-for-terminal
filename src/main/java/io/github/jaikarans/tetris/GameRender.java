@@ -1,33 +1,45 @@
 package io.github.jaikarans.tetris;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 
+@Component
 public class GameRender {
-    static GameState game = GameState.getInstance();
+    private final GameState s;
+
+    GameRender(GameState gameState) {
+        this.s = gameState;
+        System.out.println("GameRender Created: "+ this);
+    }
 
 
   /**
    * render the game in terminal
    */
-  public static void renderGame() {
+  public void renderGame() {
     long start = System.nanoTime();
 
     // Move cursor to top-left before drawing
     System.out.print("\033[H\033[2J");
     System.out.flush();
-    for (int i = 0; i < game.height; i++) {
-        System.out.println(Arrays.toString(game.arr[i]));
-    }
 
-    System.out.println("**************************************************");
     System.out.println();
-//    System.out.println();
-//    System.out.println();
-//    System.out.println();
+    System.out.println();
+    System.out.println();
+//    System.out.println("h -> left");
+//    System.out.println("l -> right");
+//    System.out.println("j -> rotate");
+    System.out.println("\t\t\th -> left");
+    System.out.println("\t\t\tl -> right");
+    System.out.println("\t\t\tj -> rotate");
+    System.out.println();
+    System.out.println();
+    System.out.println();
 
       // right border printing
-      for (int i = 0; i < game.height; i++) {
-        System.out.print(game.margin);
+      for (int i = 0; i < s.height; i++) {
+        System.out.print(s.margin);
         if (i > 2) {
 //            System.out.print("\033[38;5;236;48;5;236m█\033[0m");
             System.out.print("┃");
@@ -35,20 +47,22 @@ public class GameRender {
             System.out.print(" ");
         }
 
-        for (int j = 0; j < game.width; j++) {
+        for (int j = 0; j < s.width; j++) {
             // empty cells
-            if (game.arr[i][j] == 0) {
+            if (s.arr[i][j] == 0) {
                 // System.out.print("\033[38;5;0m██\033[0m");
-                System.out.print(" .");
+                if (i < 3) System.out.print("  ");
+                else
+                    System.out.print(" .");
                 continue;
             }
 
             String color;
-            if (game.arr[i][j] == 1) {
-                color = game.color.get(Shape.currentShape);
+            if (s.arr[i][j] == 1) {
+                color = s.color.get(Shape.currentShape);
                 System.out.print("\033["+color+"m██\033[0m");
             } else {
-                color = game.color.get(ShapeType.fromId(game.arr[i][j]));
+                color = s.color.get(ShapeType.fromId(s.arr[i][j]));
                 System.out.print("\033["+color+"m██\033[0m");
 
             }
@@ -63,9 +77,9 @@ public class GameRender {
     }
 
     // bottom border
-    System.out.print(game.margin);
-    for (int i = 0; i <= 2*game.width + 1; i++) {
-        System.out.print(i == 0 ? "┗" : i == 2 * game.width + 1  ? "┛" : "━");
+    System.out.print(s.margin);
+    for (int i = 0; i <= 2*s.width + 1; i++) {
+        System.out.print(i == 0 ? "┗" : i == 2 * s.width + 1  ? "┛" : "━");
     }
     System.out.println();
 

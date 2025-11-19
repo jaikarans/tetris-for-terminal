@@ -1,12 +1,23 @@
 package io.github.jaikarans.tetris;
 
+import org.springframework.stereotype.Component;
+
 import java.util.Arrays;
 
+@Component
 public class GameLogic {
-    private static GameState s = GameState.getInstance();
+    private final GameState s;
+    private final CollisionDetector collisionDetector;
+
+    GameLogic(GameState gameState,
+              CollisionDetector collisionDetector) {
+        this.s = gameState;
+        this.collisionDetector = collisionDetector;
+        System.out.println("GameLogic Created: "+ this);
+    }
 
     // when shape hits ground
-    public static void lockPiece() {
+    public void lockPiece() {
         for (CurrentShapeCell cell : s.shapeCells) {
             s.arr[cell.x][cell.y] = Shape.currentShape.getId();
             if (cell.x < 3) {
@@ -16,7 +27,7 @@ public class GameLogic {
         Arrays.fill(s.shapeCells, null);
     }
 
-    public static void clearFullRows() {
+    public void clearFullRows() {
         boolean rowFilled;
         for (int i = s.height - 1; i >= 0; --i) {
             rowFilled = true;
@@ -39,7 +50,7 @@ public class GameLogic {
         }
     }
 
-    public static void movePieceDown() {
+    public void movePieceDown() {
         // only clear before in seprate loop
         // otherwise it will be problematic for
         // shape like S and Z
@@ -56,9 +67,9 @@ public class GameLogic {
         }
     }
 
-    public static void moveLeft() {
+    public void moveLeft() {
         for (CurrentShapeCell cell : s.shapeCells) {
-            if (cell.y <= 0 || CollisionDetector.isSideCollision(-1)){
+            if (cell.y <= 0 || collisionDetector.isSideCollision(-1)){
                 return;
             }
         }
@@ -74,9 +85,9 @@ public class GameLogic {
 
     }
 
-    public static void moveRight() {
+    public void moveRight() {
         for (CurrentShapeCell cell : s.shapeCells) {
-            if (cell.y >= s.width || CollisionDetector.isSideCollision(1)){
+            if (cell.y >= s.width || collisionDetector.isSideCollision(1)){
                 return;
             }
         }

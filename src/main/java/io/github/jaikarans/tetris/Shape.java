@@ -1,15 +1,23 @@
 package io.github.jaikarans.tetris;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Random;
 
+@Component
 public class Shape {
-    private static final GameState s = GameState.getInstance();
+    private final GameState s;
 
     public static ShapeType currentShape;
     public static ArrayList<ShapeType> shuffleBag = new ArrayList<>();
 
-    public static ShapeType getRandomShape() {
+    Shape(GameState gameState) {
+        this.s = gameState;
+        System.out.println("Shape Created: "+ this);
+    }
+
+    public ShapeType getRandomShape() {
         if (shuffleBag.isEmpty()) {
             for (ShapeType shape: ShapeType.values()) {
                 shuffleBag.add(shape);
@@ -20,7 +28,7 @@ public class Shape {
             shuffleBag.clear();
             return selectedShape;
         }
-        
+
         Random rand = new Random();
         int selectedIndex = rand.nextInt(shuffleBag.size() - 1);
         ShapeType selectedShape = shuffleBag.get(selectedIndex);
@@ -28,7 +36,7 @@ public class Shape {
         return selectedShape;
     }
 
-    public static void generateNewShape() {
+    public void generateNewShape() {
         currentShape = getRandomShape();
 //        currentShape = ShapeType.O;
         switch (currentShape) {
