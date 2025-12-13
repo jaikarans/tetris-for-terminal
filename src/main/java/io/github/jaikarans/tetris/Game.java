@@ -1,5 +1,8 @@
 package io.github.jaikarans.tetris;
 
+import io.github.jaikarans.tetris.collision.CollisionDetector;
+import io.github.jaikarans.tetris.shape.ShapeFactory;
+import io.github.jaikarans.tetris.ui.terminal.GameRender;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import org.jline.utils.NonBlockingReader;
@@ -11,20 +14,21 @@ import static io.github.jaikarans.tetris.App.shapeOutOfBox;
 
 @Component
 public class Game {
-    private final Shape shape;
+    private final ShapeFactory shapeFactory;
     private final GameLogic gameLogic;
     private final GameRender gameRender;
     private final CollisionDetector collisionDetector;
+    private final BagRandomizer bagRandomizer = new BagRandomizer();
 
 
     public static boolean gameOver = false;
 
-    Game(
-            Shape shape,
+    public Game(
+            ShapeFactory shapeFactory,
             GameLogic gameLogic,
             GameRender gameRender,
             CollisionDetector collisionDetector) {
-        this.shape = shape;
+        this.shapeFactory = shapeFactory;
         this.gameLogic = gameLogic;
         this.gameRender = gameRender;
         this.collisionDetector = collisionDetector;
@@ -39,7 +43,8 @@ public class Game {
             terminal.enterRawMode();
 
             NonBlockingReader reader = terminal.reader();
-            shape.generateNewShape();
+            shapeFactory.currentShape = shapeFactory.generateNewShape(bagRandomizer.next());
+//            shapeFactory.currentShape = shapeFactory.generateNewShape(ShapeType.I);
             while (!gameOver) {
                 long startTime = System.currentTimeMillis();
                 int key = -1;
@@ -59,6 +64,7 @@ public class Game {
                         switch (key) {
                             case 'h' -> gameLogic.moveLeft();
                             case 'l' -> gameLogic.moveRight();
+                            case 'j' -> shapeFactory.currentShape.rotate();
                         }
                     }
                 }
@@ -88,7 +94,8 @@ public class Game {
             if (shapeOutOfBox) {
                 gameOver = true;
             } else {
-                shape.generateNewShape();
+                shapeFactory.currentShape = shapeFactory.generateNewShape(bagRandomizer.next());
+//                shapeFactory.currentShape = shapeFactory.generateNewShape(ShapeType.I);
             }
         }
     }

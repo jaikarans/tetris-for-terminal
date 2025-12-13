@@ -1,15 +1,18 @@
-package io.github.jaikarans.tetris;
+package io.github.jaikarans.tetris.ui.terminal;
 
+import io.github.jaikarans.tetris.shape.ShapeFactory;
+import io.github.jaikarans.tetris.shape.ShapeType;
+import io.github.jaikarans.tetris.state.GameState;
 import org.springframework.stereotype.Component;
-
-import java.util.Arrays;
 
 @Component
 public class GameRender {
     private final GameState s;
+    private final ShapeFactory shapeFactory;
 
-    GameRender(GameState gameState) {
+    public GameRender(GameState gameState, ShapeFactory shapeFactory) {
         this.s = gameState;
+        this.shapeFactory = shapeFactory;
         System.out.println("GameRender Created: "+ this);
     }
 
@@ -59,7 +62,7 @@ public class GameRender {
 
             String color;
             if (s.arr[i][j] == 1) {
-                color = s.color.get(Shape.currentShape);
+                color = s.color.get(shapeFactory.currentShape.getType());
                 System.out.print("\033["+color+"m██\033[0m");
             } else {
                 color = s.color.get(ShapeType.fromId(s.arr[i][j]));

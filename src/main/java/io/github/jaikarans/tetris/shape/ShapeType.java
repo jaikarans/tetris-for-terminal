@@ -1,4 +1,4 @@
-package io.github.jaikarans.tetris;
+package io.github.jaikarans.tetris.shape;
 
 public enum ShapeType {
     O(2), I(3), T(4), L(5), J(6), S(7), Z(8);

@@ -1,5 +1,7 @@
-package io.github.jaikarans.tetris;
+package io.github.jaikarans.tetris.collision;
 
+import io.github.jaikarans.tetris.state.CurrentShapeCell;
+import io.github.jaikarans.tetris.state.GameState;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -9,7 +11,7 @@ public class CollisionDetector {
     public static final int LEFT_DIRECTION = -1;
     public static final int RIGHT_DIRECTION = 1;
 
-    CollisionDetector(GameState gameState) {
+    public CollisionDetector(GameState gameState) {
         this.s = gameState;
         System.out.println("CollisionDetector Created: "+ this);
     }

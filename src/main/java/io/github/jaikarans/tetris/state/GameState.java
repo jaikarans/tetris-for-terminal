@@ -1,5 +1,6 @@
-package io.github.jaikarans.tetris;
+package io.github.jaikarans.tetris.state;
 
+import io.github.jaikarans.tetris.shape.ShapeType;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -12,8 +13,6 @@ public class GameState {
   public int height = 23;
   public int[][] arr = new int[height][width];
   public String margin = "                               ";
-  public int col = 5;
-  public int row = 2;
   public Map<ShapeType, String> color = new HashMap<>();
   public CurrentShapeCell[] shapeCells = new CurrentShapeCell[4];
 

@@ -1,5 +1,9 @@
 package io.github.jaikarans.tetris;
 
+import io.github.jaikarans.tetris.collision.CollisionDetector;
+import io.github.jaikarans.tetris.shape.ShapeFactory;
+import io.github.jaikarans.tetris.state.CurrentShapeCell;
+import io.github.jaikarans.tetris.state.GameState;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -8,18 +12,22 @@ import java.util.Arrays;
 public class GameLogic {
     private final GameState s;
     private final CollisionDetector collisionDetector;
+    private final ShapeFactory shapeFactory;
 
-    GameLogic(GameState gameState,
-              CollisionDetector collisionDetector) {
+    public GameLogic(
+            GameState gameState,
+            CollisionDetector collisionDetector,
+            ShapeFactory shapeFactory) {
         this.s = gameState;
         this.collisionDetector = collisionDetector;
+        this.shapeFactory = shapeFactory;
         System.out.println("GameLogic Created: "+ this);
     }
 
     // when shape hits ground
     public void lockPiece() {
         for (CurrentShapeCell cell : s.shapeCells) {
-            s.arr[cell.x][cell.y] = Shape.currentShape.getId();
+            s.arr[cell.x][cell.y] = shapeFactory.currentShape.getType().getId();
             if (cell.x < 3) {
                 App.shapeOutOfBox = true;
             }
