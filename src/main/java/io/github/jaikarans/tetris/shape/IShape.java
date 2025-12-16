@@ -40,6 +40,10 @@ public class IShape extends Shape{
 
         switch (degree) {
             case 0 -> {
+                // edge case
+                if (r - 1 < 0 || r + 1 >= s.height || r + 2 >= s.height) return;
+                if (c - 2 < 0 || c - 2 < 0 || c + 1 >= s.width) return;
+
                 if (s.arr[r - 1][c] == 0 && s.arr[r + 1][c] == 0 && s.arr[r + 2][c] == 0) {
                     Arrays.fill(s.shapeCells, null);
                     s.arr[r][c - 1] = 0;
@@ -54,6 +58,10 @@ public class IShape extends Shape{
                 }
             }
             case 90 -> {
+                //edge case handling
+                if (r - 1 < 0 || r - 2 < 0 || r + 1 >= s.height) return;
+                if (c - 1 < 0 || c - 2 < 0 || c + 1 >= s.width) return;
+
                 if (s.arr[r][c - 1] == 0 && s.arr[r][c - 2] == 0 && s.arr[r][c + 1] == 0) {
                     Arrays.fill(s.shapeCells, null);
                     s.arr[r - 1][c] = 0;
@@ -68,6 +76,10 @@ public class IShape extends Shape{
                 }
             }
             case 270 -> {
+                //edge case handling
+                if (r - 1 < 0 || r - 2 < 0 || r + 1 >= s.height) return;
+                if (c - 1 < 0 || c + 1 >= s.width || c + 2 >= s.width) return;
+
                 if (s.arr[r - 1][c] == 0 && s.arr[r - 2][c] == 0 && s.arr[r + 1][c] == 0) {
                     Arrays.fill(s.shapeCells, null);
                     s.arr[r][c - 1] = 0;
@@ -82,6 +94,10 @@ public class IShape extends Shape{
                 }
             }
             case 360 -> {
+                //edge case handling
+                if (r - 1 < 0 || r + 1 >= s.height || r + 2 >= s.height) return;
+                if (c - 1 < 0 || c + 1 >= s.width || c + 2 >= s.width) return;
+
                 if (s.arr[r][c - 1] == 0 && s.arr[r][c + 1] == 0 && s.arr[r][c + 2] == 0) {
                     Arrays.fill(s.shapeCells, null);
                     s.arr[r - 1][c] = 0;

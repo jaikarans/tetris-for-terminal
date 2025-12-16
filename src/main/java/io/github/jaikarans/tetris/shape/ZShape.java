@@ -39,6 +39,11 @@ public class ZShape extends Shape{
             }
         }
 
+        // edge case handling
+        if (r - 1 < 0 || r + 1 >= s.height) return;
+        if (c - 1 < 0 || c + 1 >= s.width) return;
+
+
         // 0 degree
         switch (degree) {
             case 0 -> {
