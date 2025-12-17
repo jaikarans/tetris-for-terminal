@@ -58,6 +58,8 @@ public class Game {
                             switch (arrow) {
                                 case 'D' -> gameLogic.moveLeft();   // ←
                                 case 'C' -> gameLogic.moveRight();  // →
+                                case 'A' -> shapeFactory.currentShape.rotate();  // up arrow
+                                case 'B' -> shapeFactory.currentShape.rotate();  // down arrow
                             }
                         }
                     } else {
@@ -65,6 +67,7 @@ public class Game {
                             case 'h' -> gameLogic.moveLeft();
                             case 'l' -> gameLogic.moveRight();
                             case 'j' -> shapeFactory.currentShape.rotate();
+                            case 'k' -> shapeFactory.currentShape.rotate();
                         }
                     }
                 }

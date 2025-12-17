@@ -46,6 +46,7 @@ public class GameLogic {
                 }
             }
             if (rowFilled) {
+                s.score += 1;
                 int r = i;
                 for (int row = i - 1; row >= 0; --row) {
                     for (int j = 0; j < s.width; ++j) {

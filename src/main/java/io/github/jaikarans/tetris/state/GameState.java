@@ -15,6 +15,7 @@ public class GameState {
   public String margin = "                               ";
   public Map<ShapeType, String> color = new HashMap<>();
   public CurrentShapeCell[] shapeCells = new CurrentShapeCell[4];
+  public int score = 0;
 
   GameState () {
       color.put(ShapeType.O, "93");
