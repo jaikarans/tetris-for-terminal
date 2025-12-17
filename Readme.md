@@ -16,21 +16,24 @@ Fast, lightweight, and runs on Windows, macOS, and Linux.
 
 ### Requirement
 - **Java 17**
-- **Apache Maven 3.8.7**
-
 
 ### Steps
 1. Clone the repository:
 ```bash
  git clone https://github.com/jaikarans/tetris-for-terminal.git
 ```
-2. Go to root:
+2. Navigate to the project root:
 ```bash
 cd tetris-for-terminal
 ```
-3. Run the game:
+3. Compile and run the game:
+- Linux / macOS
 ```bash
-mvn clean compile exec:java
+./mvnw clean compile exec:java
+```
+- Windows
+```bat
+mvnw.cmd clean compile exec:java
 ```
 
 
